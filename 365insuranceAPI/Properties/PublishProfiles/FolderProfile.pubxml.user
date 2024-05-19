@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Niraj_Work\365Insurance\365insuranceAPI\365insuranceAPI\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2024-05-08T17:10:31.6821917Z;True|2024-05-08T09:49:34.9224824-07:00;True|2024-05-04T00:58:59.8481480-07:00;True|2024-05-03T22:47:12.6906540-07:00;True|2024-04-27T22:15:54.0529838-07:00;True|2024-01-10T00:34:24.9508074-08:00;True|2024-01-10T00:12:13.8963294-08:00;True|2024-01-10T00:10:34.5764173-08:00;True|2024-01-09T23:50:36.8858954-08:00;True|2024-01-09T23:26:43.7401608-08:00;True|2024-01-07T10:06:45.8293089-08:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>
