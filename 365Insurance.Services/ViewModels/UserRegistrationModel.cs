@@ -9,6 +9,7 @@ namespace _365Insurance.Services.ViewModels
     public class UserRegistrationModel
     {
         public int UserId { get; set; }
+        public int AgentCompanyId { get; set; }
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? MobileNo { get; set; }
@@ -23,6 +24,9 @@ namespace _365Insurance.Services.ViewModels
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? MobileNo { get; set; }
-        public string Token { get; set; }
+        public string? Token { get; set; }
+        public int? AgentCompanyId { get; set; }
+        public string? AgentCompanyName { get; set; }
+        public string? LogoUrl { get; set; }
     }
 }

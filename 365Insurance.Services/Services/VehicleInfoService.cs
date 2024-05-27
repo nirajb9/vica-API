@@ -132,8 +132,7 @@ namespace _365Insurance.Services.Services
         public async Task<List<VT1>> GetInsuranceDetails(SearchParam searchParam)
         {
             List<VT1> lst = new List<VT1>();
-            // var insuranceDetails = new List<VT1>();
-
+          
             using (var db = new SqlConnection(_configuration.GetConnectionString("365IConnection")))
             {
                 var p = new DynamicParameters();
@@ -146,24 +145,24 @@ namespace _365Insurance.Services.Services
                 lst = db.Query<VT1>("GetInsuranceComapanyTransaction", p, commandType: CommandType.StoredProcedure).ToList();
 
             }
-
-            //var result = _context.Database.SqlQuery(@"execute GetInsuranceComapanyTransaction @StateId, @RTOId, @VehicleTypeId, @CCId, @FuelTypeId, @AgeId",  parameter.ToArray());
-          //  var result = _connection.Query($"execute GetInsuranceComapanyTransaction {searchParam.StateId}, {searchParam.RTOId}, {searchParam.VehicleTypeId}, {searchParam.CCId}, {searchParam.FuelTypeId}, {searchParam.AgeId}").ToList();
-
-            //var insuranceDetails = new List<VehicleTransactionInfo>();
-            //insuranceDetails = await (from ict in _context.InsuranceCompanyTransactions
-            //                          join vv in _context.VehicleModels on ict.CubicCapicityId equals vv.CubicCapicityId
-            //                          join vic in _context.VehicleInsuranceCompanies on ict.InsuranceCompanyId equals vic.InsuranceCompanyId
-            //                          where vv.ModelId == varientId
-            //                          select new VehicleTransactionInfo
-            //                          {
-            //                              CashBack = ict.CashBack,
-            //                              InsuranceAmount = ict.InsuranceAmount,
-            //                              InsuranceCompanyName = vic.InsuranceCompanyName
-
-            //                          }).ToListAsync();
             return lst;
         }
+        public async Task<List<VT2>> GetInsuranceDetailsPayout(SearchParam searchParam)
+        {
+            List<VT2> lst = new List<VT2>();
+
+            using (var db = new SqlConnection(_configuration.GetConnectionString("365IConnection")))
+            {
+                var p = new DynamicParameters();             
+                p.Add("@RTOId", searchParam.RTOId);             
+                p.Add("@CCId", searchParam.CCId);
+                p.Add("@FuelTypeId", searchParam.FuelTypeId);
+                p.Add("@AgeId", searchParam.AgeId);
+                lst = db.Query<VT2>("GetInsuranceInfo", p, commandType: CommandType.StoredProcedure).ToList();
+
+            }
+            return lst;
         }
+    }
 
 }

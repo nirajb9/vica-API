@@ -7,7 +7,13 @@ public partial class UserRegistration
 {
     public int UserId { get; set; }
 
+    public int? AgentCompanyId { get; set; }
+
+    public int? SubUserId { get; set; }
+
     public string? Name { get; set; }
+
+    public string? Username { get; set; }
 
     public string? Email { get; set; }
 
@@ -18,6 +24,8 @@ public partial class UserRegistration
     public byte[]? PasswordHash { get; set; }
 
     public byte[]? PasswordSalt { get; set; }
+
+    public bool? IsDeleted { get; set; }
 
     public bool? Isapproved { get; set; }
 

@@ -3,17 +3,19 @@ using System.Collections.Generic;
 
 namespace _365Insurance.Core.Domain.Models;
 
-public partial class VehicleVariant
+public partial class CompanySlider
 {
-    public int VehicleVariantId { get; set; }
+    public int TopSliderId { get; set; }
 
-    public int ModelId { get; set; }
+    public int? UserId { get; set; }
 
-    public int? CompanyId { get; set; }
+    public int? AgentCompanyId { get; set; }
 
-    public string? VariantName { get; set; }
+    public string? Slider1 { get; set; }
 
-    public int? CubicCapicityId { get; set; }
+    public string? Slider2 { get; set; }
+
+    public string? Slider3 { get; set; }
 
     public bool? IsDeleted { get; set; }
 

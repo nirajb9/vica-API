@@ -14,6 +14,9 @@ namespace _365Insurance.Services.ViewModels
         public int CCId { get; set; }
         public int FuelTypeId { get; set; }
         public int AgeId { get; set; }
+        public int UserId { get; set; }
+        public int AgentCompanyId { get; set; }
+        public string UserName { get; set; }
     }
 
     public class UploadModel

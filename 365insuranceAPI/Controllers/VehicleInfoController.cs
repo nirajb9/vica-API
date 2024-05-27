@@ -68,6 +68,11 @@ namespace _365insuranceAPI.Controllers
         {
             return await _vehicleInfoService.GetInsuranceDetails(searchParam);
         }
+        [HttpPost("GetInsuranceDetailsPayout")]
+        public async Task<List<VT2>> GetInsuranceDetailsPayout([FromBody] SearchParam searchParam)
+        {
+            return await _vehicleInfoService.GetInsuranceDetailsPayout(searchParam);
+        }
     }
 
 

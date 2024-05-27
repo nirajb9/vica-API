@@ -24,32 +24,52 @@ namespace _365insuranceAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserRegistration>> Register(UserRegistrationModel registerDto)
+        public async Task<IActionResult> Register(UserRegistrationModel registerDto)
         {
-            if (await UserExists(registerDto.Email)) return BadRequest("UserName Is Already Taken");
-            var hmac = new HMACSHA512();
-
-            var user = new UserRegistration
+            try
             {
-                Name = registerDto.Name.ToLower(),
-                Email = registerDto.Email,
-                MobileNo = registerDto.MobileNo,
-                Isapproved = true,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key,
 
-            };
 
-            _context.UserRegistrations.Add(user);
-            await _context.SaveChangesAsync();
-            return user;
+                if (await UserExists(registerDto.MobileNo, registerDto.AgentCompanyId))
+                {
+                    return StatusCode(statusCode: 401, "UserName Is Already Taken");
+                }
+
+                var hmac = new HMACSHA512();
+
+                var userReg = _context.UserRegistrations.OrderBy(x => x.UserId).LastOrDefault();
+
+                int id = userReg != null ? userReg.UserId +1 : 1;
+
+                var user = new UserRegistration
+                {
+                    Name = registerDto.Name.ToLower(),
+                    Email = registerDto.Email,
+                    MobileNo = registerDto.MobileNo,
+                    Username =   "IS-" + id,
+                    Isapproved = true,
+                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                    PasswordSalt = hmac.Key,
+                    AgentCompanyId = registerDto.AgentCompanyId
+
+                };
+
+                _context.UserRegistrations.Add(user);               
+                await _context.SaveChangesAsync();
+                return StatusCode(statusCode:200, user);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(statusCode: 300, "error");
+
+            }
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDetails>> Login(LoginModel loginDto)
         {
             var user = await _context.UserRegistrations
-                .SingleOrDefaultAsync(x => x.Email == loginDto.Email);
+                .SingleOrDefaultAsync(x => x.Username == loginDto.username);
 
             if (user == null) return Unauthorized("Invalid UserName");
 
@@ -61,22 +81,37 @@ namespace _365insuranceAPI.Controllers
             {
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
             }
-
+            var agentCompanyDetails = await _context.AgentCompanyRegistrations.Where(s => s.AgentCompanyId == user.AgentCompanyId).FirstOrDefaultAsync();
             return new UserDetails
             {
+                UserId = user.UserId,
                 Email = user.Email,
                 Name = user.Name,
                 MobileNo = user.MobileNo,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                AgentCompanyId = user.AgentCompanyId,
+                AgentCompanyName = agentCompanyDetails != null ? agentCompanyDetails.AgentCompanyName : "",
+                LogoUrl = agentCompanyDetails != null ? agentCompanyDetails.AgentCompanyLogoUrl : ""
             };
 
 
         }
-
-
-        private async Task<bool> UserExists(string email)
+        [HttpGet("GetMainCompany")]
+        public async Task<MainCompany> GetMainCompany()
         {
-            return await _context.UserRegistrations.AnyAsync(x => x.Email.ToLower() == email.ToLower());
+            return await _context.MainCompanies.FirstOrDefaultAsync();
+        }
+
+        [HttpGet("GetAgentCompanyRegistrations")]
+        public async Task<List<AgentCompanyRegistration>> GetAgentCompanyRegistrations()
+        {
+            return await _context.AgentCompanyRegistrations.Where(s=> s.IsDeleted == false).ToListAsync();
+        }
+
+
+        private async Task<bool> UserExists(string email, int agent_company_id)
+        {
+            return await _context.UserRegistrations.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.AgentCompanyId == agent_company_id);
         }
 
         [HttpGet("getuserdetails")]

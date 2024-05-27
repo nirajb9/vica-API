@@ -18,6 +18,7 @@ namespace _365Insurance.Services.IServices
         Task<string> DeleteVehicleInfo(int id);
         Task<List<VehicleTransactionInfo>> GetInsuranceDetails(int varientId, string stateCode, int level);
         Task<List<VT1>> GetInsuranceDetails(SearchParam searchParam);
+        Task<List<VT2>> GetInsuranceDetailsPayout(SearchParam searchParam);
     }
 
 }

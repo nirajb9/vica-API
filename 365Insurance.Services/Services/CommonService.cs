@@ -1,5 +1,6 @@
 ﻿using _365Insurance.Core.Domain.Models;
 using _365Insurance.Services.IServices;
+using _365Insurance.Services.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,27 @@ namespace _365Insurance.Services.Services
         public async Task<List<RtoMa>> GetRTODetails(int stateId)
         {
             return await _context.RtoMas.Where(s => s.IsDeleted == false && s.StateId == stateId).ToListAsync();
+        }
+
+        public async Task<List<PolicyPaymentLink>> GetPaymentLink(SearchParam searchParam)
+        {
+            return await _context.PolicyPaymentLinks.Where(s =>s.UserId == searchParam.UserId && s.AgentCompanyId == searchParam.AgentCompanyId && s.IsDeleted == false).OrderByDescending(s=>s.PaymentLinkId).ToListAsync();
+        }
+        public async Task<List<PolicySurveyLink>> GetSurveyLink(SearchParam searchParam)
+        {
+            return await _context.PolicySurveyLinks.Where(s => s.UserId == searchParam.UserId && s.AgentCompanyId == searchParam.AgentCompanyId && s.IsDeleted == false).OrderByDescending(s => s.SurveyLinkId).ToListAsync();
+        }
+        public async Task<List<PolicyType>> GetPolicyType(SearchParam searchParam)
+        {
+            return await _context.PolicyTypes.Where(s => s.IsDeleted == false).ToListAsync();
+        }
+        public async Task<List<PolicyCashback>> GetPolicyCashback(SearchParam searchParam)
+        {
+            return await _context.PolicyCashbacks.Where(s => s.UserId == searchParam.UserId && s.AgentCompanyId == searchParam.AgentCompanyId).OrderByDescending(s => s.CashbackAmountId).ToListAsync();
+        }
+        public async Task<CompanySlider> GetCompanySliders(SearchParam searchParam)
+        {
+            return await _context.CompanySliders.Where(s => s.UserId == searchParam.UserId && s.AgentCompanyId == searchParam.AgentCompanyId).FirstOrDefaultAsync();
         }
 
     }

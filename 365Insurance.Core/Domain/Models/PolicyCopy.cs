@@ -3,17 +3,19 @@ using System.Collections.Generic;
 
 namespace _365Insurance.Core.Domain.Models;
 
-public partial class VehicleVariant
+public partial class PolicyCopy
 {
-    public int VehicleVariantId { get; set; }
+    public int PolicyCopyId { get; set; }
 
-    public int ModelId { get; set; }
+    public int? UserId { get; set; }
 
-    public int? CompanyId { get; set; }
+    public int? AgentCompanyId { get; set; }
 
-    public string? VariantName { get; set; }
+    public int? TpRatesId { get; set; }
 
-    public int? CubicCapicityId { get; set; }
+    public int? TpRequestId { get; set; }
+
+    public string? PolicyCopyUrl { get; set; }
 
     public bool? IsDeleted { get; set; }
 

@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/365Insurance.Services/obj
+/365insuranceAPI/bin/Debug/net6.0
+/365Insurance.Core/obj
+/365insuranceAPI/obj
+/365Insurance.Core/bin/Debug/net6.0
+/365Insurance.Core/bin/Release/net6.0
+/365Insurance.Services/bin
+/365insuranceAPI/bin/Release/net6.0
+/365insuranceAPI/appsettings.json
+/365insuranceAPI/appsettings.Development.json
+/365Insurance.Core/Domain/Models/Insure247DbContext.cs
+/365Insurance.Core/Domain/Models/_247IDbContext.cs
