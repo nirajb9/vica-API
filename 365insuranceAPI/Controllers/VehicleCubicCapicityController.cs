@@ -1,5 +1,6 @@
 ﻿using _365Insurance.Core.Domain.Models;
 using _365Insurance.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace _365insuranceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VehicleCubicCapicityController : ControllerBase
     {
         private readonly IVehicleCubicCapicityService _vehicleCubicCapicityService;
@@ -16,7 +18,7 @@ namespace _365insuranceAPI.Controllers
             _vehicleCubicCapicityService = vehicleCubicCapicityService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllVehicleCubicCapicity")]
         public Task<List<VehicleCubicCapicity>> GetAllVehicleCubicCapicity()
         {
             return _vehicleCubicCapicityService.GetAllVehicleCubicCapicity();

@@ -20,6 +20,8 @@ namespace _365Insurance.Services.IServices
         Task<List<PolicyType>> GetPolicyType(SearchParam searchParam);
         Task<List<PolicyCashback>> GetPolicyCashback(SearchParam searchParam);
         Task<CompanySlider> GetCompanySliders(SearchParam searchParam);
-       
+        Task<List<VehicleInsuranceCompany>> GetVehicleInsuranceCompanies();
+        Task<AllMastersModel> GetAllMasters();
+
     }
 }

@@ -74,6 +74,17 @@ namespace _365insuranceAPI.Controllers
         {
             return await _commonService.GetCompanySliders(searchParam);
         }
+        [HttpGet("GetVehicleInsuranceCompanies")]
+        public async Task<List<VehicleInsuranceCompany>> GetVehicleInsuranceCompanies()
+        {
+            return await _commonService.GetVehicleInsuranceCompanies();
+        }
+
+        [HttpGet("GetAllMasters")]
+        public async Task<AllMastersModel> GetAllMasters()
+        {
+            return await _commonService.GetAllMasters();
+        }
 
     }
 }

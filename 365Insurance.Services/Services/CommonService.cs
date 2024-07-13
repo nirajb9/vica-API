@@ -62,6 +62,25 @@ namespace _365Insurance.Services.Services
         {
             return await _context.CompanySliders.Where(s => s.UserId == searchParam.UserId && s.AgentCompanyId == searchParam.AgentCompanyId).FirstOrDefaultAsync();
         }
+        public async Task<List<VehicleInsuranceCompany>> GetVehicleInsuranceCompanies()
+        {
+            return await _context.VehicleInsuranceCompanies.Where(s => s.IsDeleted == false).ToListAsync();
+        }
+        public async Task<AllMastersModel> GetAllMasters()
+        {
+            AllMastersModel allMastersModel = new AllMastersModel();
+            allMastersModel.FuelTypeList = await GetVehicleFueltypes();
+            allMastersModel.StateList = await GetState();
+            allMastersModel.RtoList = await _context.RtoMas.Where(s => s.IsDeleted == false).ToListAsync();
+            allMastersModel.VehicleAgeList = await GetVehicleAge();
+            allMastersModel.VehicleTypeList = await GetVehicleType();
+            allMastersModel.VehicleInsuranceCompanyList = await GetVehicleInsuranceCompanies();
+            allMastersModel.VehicleCubicCapicityList= await _context.VehicleCubicCapicities.Where(s => s.IsDeleted == false).ToListAsync();
+
+            return allMastersModel;
+        }
+
+
 
     }
 }

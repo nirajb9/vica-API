@@ -23,7 +23,9 @@ public partial class TpRatesMa
 
     public int? GcvGvw { get; set; }
 
-    public int? CubicCapicity { get; set; }
+    public int? CubicCapicityId { get; set; }
+
+    public int? VehicleTypeId { get; set; }
 
     public int? AgeId { get; set; }
 
