@@ -39,20 +39,21 @@ namespace _365Insurance.Services.Services
 
 
         // Update
-        public async Task<StateMa> UpdateStateAsync(StateMa state)
+        public async Task<StateMa?> UpdateStateAsync(StateMa state)
         {
-            var existingState = await _context.StateMas.FindAsync(state.StateId);
-            if (existingState == null) return null;
-
-            existingState.StateName = state.StateName;
-            existingState.StateCode = state.StateCode;
-            existingState.IsDeleted = state.IsDeleted;
-            existingState.CreatedBy = state.CreatedBy;
-            existingState.CreatedDate = state.CreatedDate;
-            existingState.ModifiedBy = state.ModifiedBy;
-            existingState.ModifiedDate = state.ModifiedDate;
-
-            await _context.SaveChangesAsync();
+            var existingState = _context.StateMas.Where(s=> s.StateId == state.StateId).FirstOrDefault();
+            if (existingState != null)
+            {
+                existingState.StateName = state.StateName;
+                existingState.StateCode = state.StateCode;
+                existingState.IsDeleted = state.IsDeleted;
+                existingState.CreatedBy = state.CreatedBy;
+                existingState.CreatedDate = state.CreatedDate;
+                existingState.ModifiedBy = state.ModifiedBy;
+                existingState.ModifiedDate = state.ModifiedDate;
+                _context.StateMas.Update(existingState);
+                await _context.SaveChangesAsync();
+            }
             return existingState;
         }
 
@@ -62,7 +63,19 @@ namespace _365Insurance.Services.Services
             var state = await _context.StateMas.FindAsync(id);
             if (state == null) return false;
 
-            _context.StateMas.Remove(state);
+            state.IsDeleted = true;
+            _context.StateMas.Update(state);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> EnableStateAsync(int id)
+        {
+            var state = await _context.StateMas.FindAsync(id);
+            if (state == null) return false;
+
+            state.IsDeleted = false;
+            _context.StateMas.Update(state);
             await _context.SaveChangesAsync();
             return true;
         }

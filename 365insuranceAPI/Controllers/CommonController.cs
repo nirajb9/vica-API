@@ -17,7 +17,7 @@ namespace _365insuranceAPI.Controllers
 
         public CommonController(ICommonService commonService)
         {
-            _commonService = commonService;
+            _commonService = commonService;      
         }
 
         [HttpGet("GetVehicleFueltypes")]
@@ -86,5 +86,33 @@ namespace _365insuranceAPI.Controllers
             return await _commonService.GetAllMasters();
         }
 
+        [HttpGet("GetClaimSupport")]
+        public async Task<List<ClaimSupportModel>> GetClaimSupport()
+        {
+            return await _commonService.GetClaimSupport();
+        }
+
+        [HttpGet("GetMonthlyGrid")]
+        public async Task<List<MonthlyGridModel>> GetMonthlyGrid()
+        {
+            return await _commonService.GetMonthlyGrid();
+        }
+
+        [HttpPost("GetPolicyCopy")]
+        public async Task<List<PolicyCopy>?> GetPolicyCopy([FromBody] PolicyCopySearch model)
+        {
+            List<PolicyCopy>? data = new List<PolicyCopy>();
+            try
+            {
+                data = await _commonService.GetPolicyCopy(model);
+
+            }
+            catch (Exception ex)
+            {
+                return data;
+            }
+            return data;
+
+        }
     }
 }

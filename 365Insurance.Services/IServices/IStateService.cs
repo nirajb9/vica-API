@@ -14,5 +14,6 @@ namespace _365Insurance.Services.IServices
         Task<StateMa> UpdateStateAsync(StateMa state);
         Task<StateMa> GetStateByIdAsync(int id);
         Task<StateMa> AddStateAsync(StateMa state);
+        Task<bool> EnableStateAsync(int id);
     }
 }

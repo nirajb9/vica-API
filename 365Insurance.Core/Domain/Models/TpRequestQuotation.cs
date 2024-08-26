@@ -21,6 +21,8 @@ public partial class TpRequestQuotation
 
     public int? CompanyId { get; set; }
 
+    public string? VehicleNo { get; set; }
+
     public decimal? PremimumAmount { get; set; }
 
     public decimal? CashbackAmount { get; set; }
@@ -66,6 +68,8 @@ public partial class TpRequestQuotation
     public string? DlBUrlw { get; set; }
 
     public string? OldPolicyUrlw { get; set; }
+
+    public bool? IsDeleted { get; set; }
 
     public int? CreatedBy { get; set; }
 

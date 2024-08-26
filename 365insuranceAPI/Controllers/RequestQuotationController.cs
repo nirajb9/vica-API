@@ -78,5 +78,20 @@ namespace _365insuranceAPI.Controllers
             return Ok(data);
         
         }
+
+        [HttpGet("GetTPRequestQuotation/{userid}")]
+        public List<TPRequestQuotationModel> GetTPRequestQuotation(int userId)
+        {
+            var data = _tpRequestQuotationService.GetRequestedQuotation(userId);
+            return data;
+        }
+
+        [HttpGet("GetRequestedQuotationById/{userid}/{id}")]
+        public TPRequestQuotationDetailsModel? GetRequestedQuotationById(int userId,int id)
+        {
+            var data = _tpRequestQuotationService.GetRequestedQuotationById(id, userId);
+            return data;
+        }
+
     }
 }

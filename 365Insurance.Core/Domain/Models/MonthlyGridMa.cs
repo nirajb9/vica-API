@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace _365Insurance.Core.Domain.Models;
 
-public partial class PolicyCopy
+public partial class MonthlyGridMa
 {
-    public int PolicyCopyId { get; set; }
+    public int GridId { get; set; }
 
-    public int? UserId { get; set; }
+    public string? Month { get; set; }
 
-    public int? AgentCompanyId { get; set; }
+    public int? StateId { get; set; }
 
-    public int? TpRequestId { get; set; }
-
-    public string? PolicyCopyUrl { get; set; }
+    public string? FileLink { get; set; }
 
     public bool? IsDeleted { get; set; }
 

@@ -3,17 +3,23 @@ using System.Collections.Generic;
 
 namespace _365Insurance.Core.Domain.Models;
 
-public partial class PolicyCopy
+public partial class PaymentLink
 {
-    public int PolicyCopyId { get; set; }
-
-    public int? UserId { get; set; }
+    public int PaymentLinkId { get; set; }
 
     public int? AgentCompanyId { get; set; }
 
+    public int? UserId { get; set; }
+
     public int? TpRequestId { get; set; }
 
-    public string? PolicyCopyUrl { get; set; }
+    public string? PaymentLink1 { get; set; }
+
+    public string? PaymentStatus { get; set; }
+
+    public DateTime? ExpiredDate { get; set; }
+
+    public string? Comments { get; set; }
 
     public bool? IsDeleted { get; set; }
 

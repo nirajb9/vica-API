@@ -39,5 +39,29 @@ namespace _365Insurance.Services.ViewModels
         public List<RtoMa>? RtoList { get; set; }
         public List<VehicleInsuranceCompany>? VehicleInsuranceCompanyList { get; set; }
         public List<VehicleCubicCapicity>? VehicleCubicCapicityList { get; set; }
+        public int GSTValue { get; set; }
+    }
+
+    public class ClaimSupportModel
+    {
+        public int Id { get; set; }
+        public string? CompanyName { get; set; }
+        public string? ContactNo { get; set; }
+    }
+
+    public class MonthlyGridModel
+    {
+        public int Id { get; set; }
+        public string? StateCode { get; set; }
+        public string? StateName { get; set; }
+        public string? Month { get; set; }
+        public string? FileLink { get; set; }
+    }
+
+    public class PolicyCopySearch
+    {
+        public int userid { get; set; }
+        public DateTime? startdate { get; set; }
+        public DateTime? enddate { get; set; }
     }
 }

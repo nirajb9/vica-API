@@ -22,6 +22,9 @@ namespace _365Insurance.Services.IServices
         Task<CompanySlider> GetCompanySliders(SearchParam searchParam);
         Task<List<VehicleInsuranceCompany>> GetVehicleInsuranceCompanies();
         Task<AllMastersModel> GetAllMasters();
+        Task<List<ClaimSupportModel>> GetClaimSupport();
+        Task<List<MonthlyGridModel>> GetMonthlyGrid();
+        Task<List<PolicyCopy>?> GetPolicyCopy(PolicyCopySearch model);
 
     }
 }

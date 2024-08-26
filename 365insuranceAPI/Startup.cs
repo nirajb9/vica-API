@@ -47,6 +47,7 @@ namespace _365insuranceAPI
             services.AddScoped<ITPRequestQuotationService, TPRequestQuotationService>();
             services.AddScoped<IStateService, StateService>();
             services.AddScoped<ITpRatesService, TpRatesService>();
+            services.AddScoped<ICustomerLeadsService, CustomerLeadsService>();
             services.AddControllers();
         }
     }

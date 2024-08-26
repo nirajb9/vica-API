@@ -27,15 +27,18 @@ namespace _365insuranceAPI.Controllers
         {
             try
             {
-                var stateadd = _stateService.AddStateAsync(state);
-                if(stateadd != null)
+                StateMa sm = new StateMa();
+                if(state.StateId>0)
                 {
-                    return  stateadd.Id;
+                   var stateupdate = _stateService.UpdateStateAsync(state);
+                    return stateupdate.Id;
                 }
                 else
                 {
-                    return 0;
+                    var stateadd = _stateService.AddStateAsync(state);
+                    return stateadd.Id;
                 }
+               
                 
             }
             catch(Exception ex)
@@ -58,5 +61,35 @@ namespace _365insuranceAPI.Controllers
             }
 
         }
+
+        [HttpDelete("DeleteState/{id}")]
+        public async Task<bool> DeleteState(int id)
+        {
+            bool result = false;
+            try
+            {
+              result = await _stateService.DeleteStateAsync(id);
+            }
+            catch(Exception ex)
+            {
+                return result;
+            }
+            return result;
+        }
+        [HttpDelete("EnableState/{id}")]
+        public async Task<bool> EnableState(int id)
+        {
+            bool result = false;
+            try
+            {
+                result = await _stateService.EnableStateAsync(id);
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            return result;
+        }
+
     }
 }

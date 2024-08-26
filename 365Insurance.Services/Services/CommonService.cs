@@ -76,8 +76,77 @@ namespace _365Insurance.Services.Services
             allMastersModel.VehicleTypeList = await GetVehicleType();
             allMastersModel.VehicleInsuranceCompanyList = await GetVehicleInsuranceCompanies();
             allMastersModel.VehicleCubicCapicityList= await _context.VehicleCubicCapicities.Where(s => s.IsDeleted == false).ToListAsync();
+            allMastersModel.GSTValue = 18;
 
             return allMastersModel;
+        }
+
+        public async Task<List<ClaimSupportModel>> GetClaimSupport()
+        {
+            List<ClaimSupportModel>? result = null;
+            try
+            {
+                result = await (from cs in _context.ClaimSupports
+                          join viv in _context.VehicleInsuranceCompanies on cs.InsuranceCompanyId equals viv.InsuranceCompanyId
+                          where cs.IsDeleted == false && viv.IsDeleted == false
+                          select new ClaimSupportModel
+                          {
+                              CompanyName = viv.InsuranceCompanyName,
+                              ContactNo = cs.ContactDetails,
+                              Id = cs.ClaimSupportId
+
+                          }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return result;
+        }
+
+        public async Task<List<MonthlyGridModel>> GetMonthlyGrid()
+        {
+            List<MonthlyGridModel>? result = null;
+            try
+            {
+                result = await (from mg in _context.MonthlyGridMas
+                                join sm in _context.StateMas on mg.StateId equals sm.StateId
+                                where mg.IsDeleted == false && sm.IsDeleted == false
+                                select new MonthlyGridModel
+                                {
+                                    FileLink = mg.FileLink,
+                                    Month = mg.Month,
+                                    StateCode = sm.StateCode,
+                                    StateName = sm.StateName,                          
+                                    Id = mg.GridId
+
+                                }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return result;
+        }
+
+        public async Task<List<PolicyCopy>?> GetPolicyCopy(PolicyCopySearch model)
+        {
+            List<PolicyCopy>? result = null;
+            try
+            {
+                DateTime? sdate = model.startdate == null ? DateTime.Now : model.startdate;
+                DateTime? edate = model.enddate == null ? DateTime.Now : model.enddate;
+                result = await _context.PolicyCopies.Where(s => s.UserId == model.userid && s.CreatedDate >= sdate.Value.Date.AddDays(-1) && s.CreatedDate <= edate.Value.Date.AddDays(1) && s.IsDeleted == false).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+
+            return result;
         }
 
 
