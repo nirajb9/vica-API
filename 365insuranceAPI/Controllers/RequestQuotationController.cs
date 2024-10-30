@@ -93,5 +93,24 @@ namespace _365insuranceAPI.Controllers
             return data;
         }
 
+        [HttpGet("GetPaymentLink/{TPRequestId}")]
+        public PaymentLink? GetPaymentLink(int TPRequestId)
+        {
+            var data = _tpRequestQuotationService.GetPaymentLink(TPRequestId);
+            return data;
+        }
+        [HttpPost("AddPaymentLink")]
+        public string AddPaymentLink([FromBody] PaymentLink model)
+        {
+            var result = _tpRequestQuotationService.AddPaymentLink(model);
+            return result;
+        }
+        [HttpPost("UpdatePaymentLink")]
+        public string UpdatePaymentLink([FromBody] PaymentLink model)
+        {
+            var result = _tpRequestQuotationService.UpdatePaymentLink(model);
+            return result;
+        }
+
     }
 }

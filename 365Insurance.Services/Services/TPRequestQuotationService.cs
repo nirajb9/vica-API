@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace _365Insurance.Services.Services
 {
-    public class TPRequestQuotationService: ITPRequestQuotationService
+    public class TPRequestQuotationService : ITPRequestQuotationService
     {
         private readonly Insure247DbContext _context;
         private readonly IConfiguration _configuration;
@@ -42,40 +42,40 @@ namespace _365Insurance.Services.Services
             List<TPRequestQuotationModel> result = new List<TPRequestQuotationModel>();
             try
             {
-                 result = (from trq in _context.TpRequestQuotations
-                           join tpr in _context.TpRatesMas on trq.TpId equals tpr.TpRatesId
-                           join viv in _context.VehicleInsuranceCompanies on tpr.InsuranceCompanyId equals viv.InsuranceCompanyId
-                           where trq.UserId == userId
-                           select new TPRequestQuotationModel
-                              {
-                                  Id = trq.TpRequestId,
-                                  Name = trq.Name,
-                                  MobileNo = Convert.ToInt64(trq.MobileNo),
-                                  PremimumAmount = trq.PremimumAmount ?? 0,
-                                  VehicleNo = trq.VehicleNo,
-                                  CreatedDate = trq.CreatedDate,                                
-                                  PolicyType = "TP",
-                                  InsuranceCompany = viv.InsuranceCompanyName
-                     
-                              }).OrderByDescending(s => s.Id).ToList();
+                result = (from trq in _context.TpRequestQuotations
+                          join tpr in _context.TpRatesMas on trq.TpId equals tpr.TpRatesId
+                          join viv in _context.VehicleInsuranceCompanies on tpr.InsuranceCompanyId equals viv.InsuranceCompanyId
+                          where trq.UserId == userId
+                          select new TPRequestQuotationModel
+                          {
+                              Id = trq.TpRequestId,
+                              Name = trq.Name,
+                              MobileNo = Convert.ToInt64(trq.MobileNo),
+                              PremimumAmount = trq.PremimumAmount ?? 0,
+                              VehicleNo = trq.VehicleNo,
+                              CreatedDate = trq.CreatedDate,
+                              PolicyType = "TP",
+                              InsuranceCompany = viv.InsuranceCompanyName
+
+                          }).OrderByDescending(s => s.Id).ToList();
 
                 foreach (var x in result)
                 {
                     var paymentLink = _context.PaymentLinks.Where(s => s.TpRequestId == x.Id).FirstOrDefault();
                     if (paymentLink != null)
                     {
-                        x.PaymentLink = paymentLink.PaymentLink1;                     
+                        x.PaymentLink = paymentLink.PaymentLink1;
                         x.PaymentLinkAvailable = true;
                     }
                     else
                     {
-                        x.PaymentLink = "Not Available";                    
+                        x.PaymentLink = "Not Available";
                         x.PaymentLinkAvailable = false;
                     }
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -87,7 +87,7 @@ namespace _365Insurance.Services.Services
             TPRequestQuotationDetailsModel? result = null;
             try
             {
-                result = (from trq in _context.TpRequestQuotations                       
+                result = (from trq in _context.TpRequestQuotations
                           join tpr in _context.TpRatesMas on trq.TpId equals tpr.TpRatesId
                           join viv in _context.VehicleInsuranceCompanies on tpr.InsuranceCompanyId equals viv.InsuranceCompanyId
                           join rm in _context.RtoMas on tpr.RtoId equals rm.RtoId
@@ -140,10 +140,10 @@ namespace _365Insurance.Services.Services
 
                           }).FirstOrDefault();
 
-                if(result != null)
+                if (result != null)
                 {
                     var paymentLink = _context.PaymentLinks.Where(s => s.TpRequestId == result.Id).FirstOrDefault();
-                    if(paymentLink != null)
+                    if (paymentLink != null)
                     {
                         result.PaymentLink = paymentLink.PaymentLink1;
                         result.PaymentComments = paymentLink.Comments;
@@ -169,5 +169,56 @@ namespace _365Insurance.Services.Services
             return result;
         }
 
+        public string AddPaymentLink(PaymentLink pl)
+        {
+            string msg = "sucess";
+            try
+            {
+                var paymentlnk = GetPaymentLink(pl.TpRequestId);
+                if (paymentlnk != null)
+                {
+                    UpdatePaymentLink(pl);
+                }
+                else
+                {
+                    _context.PaymentLinks.Add(pl);
+                    _context.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                msg = "error";
+            }
+            return msg;
+        }
+        public string UpdatePaymentLink(PaymentLink pl)
+        {
+            string msg = "sucess";
+            try
+            {
+                var paymentlnk = GetPaymentLink(pl.TpRequestId);
+                if (paymentlnk != null)
+                {
+                    paymentlnk.PaymentLink1 = pl.PaymentLink1;
+                    paymentlnk.PaymentStatus = pl.PaymentStatus;
+                    paymentlnk.Comments = paymentlnk.Comments + "\n" + pl.Comments;
+                    paymentlnk.ExpiredDate = pl.ExpiredDate;
+                    _context.PaymentLinks.Update(paymentlnk);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "error";
+            }
+            return msg;
+        }
+
+        public PaymentLink? GetPaymentLink(int? TPRequestId)
+        {
+            var paymentLink = _context.PaymentLinks.Where(s => s.TpRequestId == TPRequestId).OrderByDescending(s => s.PaymentLinkId).FirstOrDefault();
+            return paymentLink;
+        }
     }
 }

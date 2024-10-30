@@ -13,5 +13,9 @@ namespace _365Insurance.Services.IServices
         string SaveTPQuotation(TpRequestQuotation model);
         List<TPRequestQuotationModel> GetRequestedQuotation(int userId);
         TPRequestQuotationDetailsModel? GetRequestedQuotationById(int id, int userId);
+        string AddPaymentLink(PaymentLink pl);
+
+        string UpdatePaymentLink(PaymentLink pl);
+        PaymentLink? GetPaymentLink(int? TPRequestId);
     }
 }
