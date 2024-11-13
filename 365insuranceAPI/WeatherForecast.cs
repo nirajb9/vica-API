@@ -1,4 +1,4 @@
-namespace _365insuranceAPI
+namespace VICAInsuranceAPI
 {
     public class WeatherForecast
     {

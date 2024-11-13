@@ -1,7 +1,7 @@
-﻿using _365Insurance.Core.Domain.Models;
-using _365Insurance.Services.IServices;
-using _365Insurance.Services.Services;
-using _365Insurance.Services.ViewModels;
+﻿using VICAInsurance.Core.Domain.Models;
+using VICAInsurance.Services.IServices;
+using VICAInsurance.Services.Services;
+using VICAInsurance.Services.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Net.WebSockets;
 
-namespace _365insuranceAPI.Controllers
+namespace VICAInsuranceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

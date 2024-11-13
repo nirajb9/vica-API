@@ -1,4 +1,4 @@
-﻿using _365Insurance.Core.Domain.Models;
+﻿using VICAInsurance.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace _365Insurance.Services.IServices
+namespace VICAInsurance.Services.IServices
 {
     public interface ICompanyService
     {

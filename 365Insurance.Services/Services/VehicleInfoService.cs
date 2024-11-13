@@ -1,6 +1,6 @@
-﻿using _365Insurance.Core.Domain.Models;
-using _365Insurance.Services.IServices;
-using _365Insurance.Services.ViewModels;
+﻿using VICAInsurance.Core.Domain.Models;
+using VICAInsurance.Services.IServices;
+using VICAInsurance.Services.ViewModels;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _365Insurance.Services.Services
+namespace VICAInsurance.Services.Services
 {
     public class VehicleInfoService : IVehicleInfoService
     {

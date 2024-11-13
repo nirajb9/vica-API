@@ -1,5 +1,5 @@
-﻿using _365Insurance.Core.Domain.Models;
-using _365Insurance.Services.IServices;
+﻿using VICAInsurance.Core.Domain.Models;
+using VICAInsurance.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _365Insurance.Services.Services
+namespace VICAInsurance.Services.Services
 {
     public class VehicleModelService : IVehicleModelService
     {

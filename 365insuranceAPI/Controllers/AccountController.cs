@@ -1,13 +1,14 @@
-﻿using _365Insurance.Core.Domain.Models;
-using _365Insurance.Services.IServices;
-using _365Insurance.Services.ViewModels;
+﻿using VICAInsurance.Core.Domain.Models;
+using VICAInsurance.Services.IServices;
+using VICAInsurance.Services.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using System;
 
-namespace _365insuranceAPI.Controllers
+namespace VICAInsuranceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,6 +17,7 @@ namespace _365insuranceAPI.Controllers
         private readonly Insure247DbContext _context;
         private readonly ITokenService _tokenService;
         private readonly IRegistrationService _registrationService;
+        private readonly Random _random = new Random();
         public AccountController(Insure247DbContext context, ITokenService tokenService, IRegistrationService registrationService)
         {
             _context = context;
@@ -26,43 +28,7 @@ namespace _365insuranceAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegistrationModel registerDto)
         {
-            try
-            {
-
-
-                if (await UserExists(registerDto.MobileNo, registerDto.AgentCompanyId))
-                {
-                    return StatusCode(statusCode: 401, "UserName Is Already Taken");
-                }
-
-                var hmac = new HMACSHA512();
-
-                var userReg = _context.UserRegistrations.OrderBy(x => x.UserId).LastOrDefault();
-
-                int id = userReg != null ? userReg.UserId +1 : 1;
-
-                var user = new UserRegistration
-                {
-                    Name = registerDto.Name.ToLower(),
-                    Email = registerDto.Email,
-                    MobileNo = registerDto.MobileNo,
-                    Username =   "IS-" + id,
-                    Isapproved = true,
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                    PasswordSalt = hmac.Key,
-                    AgentCompanyId = registerDto.AgentCompanyId
-
-                };
-
-                _context.UserRegistrations.Add(user);               
-                await _context.SaveChangesAsync();
-                return StatusCode(statusCode:200, user);
-            }
-            catch(Exception ex)
-            {
-                return StatusCode(statusCode: 300, "error");
-
-            }
+            return Ok(await _registrationService.UserRegistration(registerDto));
         }
 
         [HttpPost("login")]
@@ -96,6 +62,7 @@ namespace _365insuranceAPI.Controllers
 
 
         }
+        
         [HttpGet("GetMainCompany")]
         public async Task<MainCompany> GetMainCompany()
         {
@@ -107,19 +74,6 @@ namespace _365insuranceAPI.Controllers
         {
             return await _context.AgentCompanyRegistrations.Where(s=> s.IsDeleted == false).ToListAsync();
         }
-
-
-        private async Task<bool> UserExists(string email, int agent_company_id)
-        {
-            return await _context.UserRegistrations.AnyAsync(x => x.Email.ToLower() == email.ToLower() && x.AgentCompanyId == agent_company_id);
-        }
-
-        [HttpGet("getuserdetails")]
-        public async Task<List<UserRegistration>> GetUserDetails()
-        {
-            return await _registrationService.GetUserDetails();
-        }
-
 
     }
 }

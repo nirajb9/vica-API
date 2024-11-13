@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace _365Insurance.Core.Domain.Models;
+namespace VICAInsurance.Core.Domain.Models;
 
 public partial class RtoMa
 {

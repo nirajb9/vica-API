@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _365Insurance.Services.ViewModels
+namespace VICAInsurance.Services.ViewModels
 {
     public class VehicleTransactionInfo
     {

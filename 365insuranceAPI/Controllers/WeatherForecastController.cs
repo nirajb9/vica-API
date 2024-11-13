@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace _365insuranceAPI.Controllers
+namespace VICAInsuranceAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

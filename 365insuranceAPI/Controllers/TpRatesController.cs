@@ -1,9 +1,9 @@
-﻿using _365Insurance.Services.IServices;
-using _365Insurance.Services.ViewModels;
+﻿using VICAInsurance.Services.IServices;
+using VICAInsurance.Services.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace _365insuranceAPI.Controllers
+namespace VICAInsuranceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

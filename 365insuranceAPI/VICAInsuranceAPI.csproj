@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>_365insuranceAPI</RootNamespace>
+    <RootNamespace>VICAInsuranceAPI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\365Insurance.Core\365Insurance.Core.csproj" />
-    <ProjectReference Include="..\365Insurance.Services\365Insurance.Services.csproj" />
+    <ProjectReference Include="..\365Insurance.Core\VICAInsurance.Core.csproj" />
+    <ProjectReference Include="..\365Insurance.Services\VICAInsurance.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "365insuranceAPI", "365insuranceAPI\365insuranceAPI.csproj", "{FE5D7A0F-F8F1-4F4A-AB92-970F31E7D328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VICAInsuranceAPI", "365insuranceAPI\VICAInsuranceAPI.csproj", "{FE5D7A0F-F8F1-4F4A-AB92-970F31E7D328}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "365Insurance.Services", "365Insurance.Services\365Insurance.Services.csproj", "{950E9DF0-6BDD-4B67-8EDB-49C4A969CDA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VICAInsurance.Services", "365Insurance.Services\VICAInsurance.Services.csproj", "{950E9DF0-6BDD-4B67-8EDB-49C4A969CDA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "365Insurance.Core", "365Insurance.Core\365Insurance.Core.csproj", "{10CD7C2C-B328-4CF2-9988-71CB7DA930EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VICAInsurance.Core", "365Insurance.Core\VICAInsurance.Core.csproj", "{10CD7C2C-B328-4CF2-9988-71CB7DA930EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

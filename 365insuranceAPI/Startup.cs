@@ -1,6 +1,6 @@
-﻿using _365Insurance.Core.Domain.Models;
-using _365Insurance.Services.IServices;
-using _365Insurance.Services.Services;
+﻿using VICAInsurance.Core.Domain.Models;
+using VICAInsurance.Services.IServices;
+using VICAInsurance.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -8,7 +8,7 @@ using System;
 using System.Data;
 using System.Text;
 
-namespace _365insuranceAPI
+namespace VICAInsuranceAPI
 {
     public class Startup
     {
@@ -22,6 +22,7 @@ namespace _365insuranceAPI
         public IDbConnection DbConnection { get; set; }
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<Insure247DbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("365IConnection")));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

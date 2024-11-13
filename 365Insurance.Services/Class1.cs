@@ -1,4 +1,4 @@
-﻿namespace _365Insurance.Services
+﻿namespace VICAInsurance.Services
 {
     public class Class1
     {

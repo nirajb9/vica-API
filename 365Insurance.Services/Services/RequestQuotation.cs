@@ -1,4 +1,4 @@
-﻿using _365Insurance.Services.ViewModels;
+﻿using VICAInsurance.Services.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace _365Insurance.Services.Services
+namespace VICAInsurance.Services.Services
 {
     public class RequestQuotation
     {

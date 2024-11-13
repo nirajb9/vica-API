@@ -1,6 +1,6 @@
-﻿using _365Insurance.Core.Domain.Models;
-using _365Insurance.Services.IServices;
-using _365Insurance.Services.ViewModels;
+﻿using VICAInsurance.Core.Domain.Models;
+using VICAInsurance.Services.IServices;
+using VICAInsurance.Services.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _365Insurance.Services.Services
+namespace VICAInsurance.Services.Services
 {
     public class TokenService : ITokenService
     {
