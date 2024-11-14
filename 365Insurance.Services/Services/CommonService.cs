@@ -12,9 +12,9 @@ namespace VICAInsurance.Services.Services
 {
     public class CommonService : ICommonService
     {
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
 
-        public CommonService(Insure247DbContext context)
+        public CommonService(_247IDbContext context)
         {
             _context = context;
         }

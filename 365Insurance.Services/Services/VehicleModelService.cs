@@ -11,9 +11,9 @@ namespace VICAInsurance.Services.Services
 {
     public class VehicleModelService : IVehicleModelService
     {
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
 
-        public VehicleModelService(Insure247DbContext context)
+        public VehicleModelService(_247IDbContext context)
         {
             _context = context;
         }

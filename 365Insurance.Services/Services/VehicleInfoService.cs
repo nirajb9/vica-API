@@ -18,11 +18,11 @@ namespace VICAInsurance.Services.Services
 {
     public class VehicleInfoService : IVehicleInfoService
     {
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
         private readonly IConfiguration _configuration;
        
 
-        public VehicleInfoService(Insure247DbContext context, IConfiguration configuration)
+        public VehicleInfoService(_247IDbContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;

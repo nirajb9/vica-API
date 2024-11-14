@@ -13,6 +13,8 @@ namespace VICAInsurance.Services.IServices
         string SaveTPQuotation(TpRequestQuotation model);
         List<TPRequestQuotationModel> GetRequestedQuotation(int userId);
         TPRequestQuotationDetailsModel? GetRequestedQuotationById(int id, int userId);
+        TPRequestQuotationDetailsModel? GetRequestedQuotationById(int id);
+        List<TPRequestQuotationModel> GetRequestedQuotation();
         string AddPaymentLink(PaymentLink pl);
 
         string UpdatePaymentLink(PaymentLink pl);

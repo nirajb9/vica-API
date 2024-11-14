@@ -56,6 +56,7 @@ namespace VICAInsurance.Services.ViewModels
         public string? PaymentComments { get; set; }
         public DateTime? PaymentExpiryDate { get; set; }
         public string? PolicyType { get; set; }
+        public string? UserName { get; set; }
 
 
 
@@ -73,5 +74,6 @@ namespace VICAInsurance.Services.ViewModels
         public string? PaymentLink { get; set; }
         public string? PolicyType { get; set; }
         public bool PaymentLinkAvailable { get; set; }
+        public string? UserName { get; set; }
     }
   }

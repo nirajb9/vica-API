@@ -13,13 +13,13 @@ namespace VICAInsurance.Services.Services
 {
     public class RegistrationService : IRegistrationService
     {
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
 
         private readonly ITokenService _tokenService;
         private readonly IRegistrationService _registrationService;
         private readonly Random _random = new Random();
 
-        public RegistrationService(Insure247DbContext context)
+        public RegistrationService(_247IDbContext context)
         {
             _context = context;
         }
@@ -59,14 +59,19 @@ namespace VICAInsurance.Services.Services
                 var hmac = new HMACSHA512();
                 var userReg = _context.UserRegistrations.OrderBy(x => x.UserId).LastOrDefault();
                 int id = userReg != null ? userReg.UserId + 1 : 1;
-                registerDto.Password = RandomPassword();
+                if(registerDto.Password == null || registerDto.Password == "")
+                {
+                    registerDto.Password = RandomPassword();
+                }
+                
                 var user = new UserRegistration
                 {                  
                     Name = registerDto.Name.ToLower(),
                     Email = registerDto.Email,
                     MobileNo = registerDto.MobileNo,
-                    Username = "VA-" + id,
+                    Username = "V" + id,
                     Isapproved = true,
+                    IsDeleted = false,
                     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                     PasswordSalt = hmac.Key,
                     Password = registerDto.Password,

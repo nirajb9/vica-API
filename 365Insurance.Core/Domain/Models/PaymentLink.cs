@@ -13,6 +13,12 @@ public partial class PaymentLink
 
     public int? TpRequestId { get; set; }
 
+    public int? OfflineQuotationId { get; set; }
+
+    public int? OfflineQuotationDetailsId { get; set; }
+
+    public string? QuoteRequestType { get; set; }
+
     public string? PaymentLink1 { get; set; }
 
     public string? PaymentStatus { get; set; }

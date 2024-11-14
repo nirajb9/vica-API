@@ -23,7 +23,7 @@ namespace VICAInsuranceAPI
         public void ConfigureServices(IServiceCollection services)
         {
             
-            services.AddDbContext<Insure247DbContext>(options =>
+            services.AddDbContext<_247IDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("365IConnection")));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -49,6 +49,7 @@ namespace VICAInsuranceAPI
             services.AddScoped<IStateService, StateService>();
             services.AddScoped<ITpRatesService, TpRatesService>();
             services.AddScoped<ICustomerLeadsService, CustomerLeadsService>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddControllers();
         }
     }

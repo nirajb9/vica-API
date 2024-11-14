@@ -12,9 +12,9 @@ namespace VICAInsurance.Services.Services
     public class StateService : IStateService
     {
 
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
 
-        public StateService(Insure247DbContext context)
+        public StateService(_247IDbContext context)
         {
             _context = context;
         }

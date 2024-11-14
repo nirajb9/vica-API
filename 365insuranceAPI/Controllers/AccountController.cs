@@ -14,15 +14,17 @@ namespace VICAInsuranceAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
         private readonly ITokenService _tokenService;
         private readonly IRegistrationService _registrationService;
+        private readonly ILoginService _loginService;
         private readonly Random _random = new Random();
-        public AccountController(Insure247DbContext context, ITokenService tokenService, IRegistrationService registrationService)
+        public AccountController(_247IDbContext context, ITokenService tokenService, IRegistrationService registrationService, ILoginService loginService)
         {
             _context = context;
             _tokenService = tokenService;
             _registrationService = registrationService;
+            _loginService = loginService;
         }
 
         [HttpPost("register")]
@@ -60,9 +62,19 @@ namespace VICAInsuranceAPI.Controllers
                 LogoUrl = agentCompanyDetails != null ? agentCompanyDetails.AgentCompanyLogoUrl : ""
             };
 
+        }
+        [HttpPost("adminlogin")]
+        public async Task<ActionResult<UserDetails>> AdminLogin(LoginModel login)
+        {
+            var user = await _loginService.LoginUser(login, true);
+            if(user == null)
+            {
+                return Unauthorized("Invalid UserName/Password");
+            }
+            return user;
 
         }
-        
+
         [HttpGet("GetMainCompany")]
         public async Task<MainCompany> GetMainCompany()
         {

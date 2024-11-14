@@ -11,9 +11,9 @@ namespace VICAInsurance.Services.Services
 {
     public class TpRatesService : ITpRatesService
     {
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
 
-        public TpRatesService(Insure247DbContext context)
+        public TpRatesService(_247IDbContext context)
         {
             _context = context;
         }

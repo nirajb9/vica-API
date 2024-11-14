@@ -86,10 +86,24 @@ namespace VICAInsuranceAPI.Controllers
             return data;
         }
 
+        [HttpGet("GetTPRequestQuotation")]
+        public List<TPRequestQuotationModel> GetTPRequestQuotation()
+        {
+            var data = _tpRequestQuotationService.GetRequestedQuotation();
+            return data;
+        }
+
         [HttpGet("GetRequestedQuotationById/{userid}/{id}")]
         public TPRequestQuotationDetailsModel? GetRequestedQuotationById(int userId,int id)
         {
             var data = _tpRequestQuotationService.GetRequestedQuotationById(id, userId);
+            return data;
+        }
+
+        [HttpGet("GetRequestedQuotationById/{id}")]
+        public TPRequestQuotationDetailsModel? GetRequestedQuotationById(int id)
+        {
+            var data = _tpRequestQuotationService.GetRequestedQuotationById(id);
             return data;
         }
 

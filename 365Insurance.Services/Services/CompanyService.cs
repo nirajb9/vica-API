@@ -12,9 +12,9 @@ namespace VICAInsurance.Services.Services
 {
     public class CompanyService : ICompanyService
     {
-        private readonly Insure247DbContext _context;
+        private readonly _247IDbContext _context;
 
-        public CompanyService(Insure247DbContext context)
+        public CompanyService(_247IDbContext context)
         {
             _context = context;
         }
