@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace VICAInsurance.Core.Domain.Models;
 
-public partial class PolicyCopy
+public partial class PolicyCashbackRequest
 {
-    public int PolicyCopyId { get; set; }
+    public int PolicyCashbackRequestId { get; set; }
 
     public int? UserId { get; set; }
 
+    public string? VehicleNo { get; set; }
+
+    public string? PolicyUrlM { get; set; }
+
     public int? AgentCompanyId { get; set; }
-
-    public int? TpRequestId { get; set; }
-
-    public string? PolicyCopyUrl { get; set; }
 
     public string? Status { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,12 +39,27 @@ namespace VICAInsurance.Services.Services
             return "success";
         }
 
-        public List<OfflineQuotationRequestModel> GetOfflineQuotation(int userId)
+        public string SaveOfflinePolicyBuyRequest(OfflinePolicyBuyRequest model)
+        {
+            try
+            {
+                _context.OfflinePolicyBuyRequests.Add(model);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return "fail";
+            }
+
+            return "success";
+        }
+
+        public async Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation(int userId)
         {
             List<OfflineQuotationRequestModel> result = new List<OfflineQuotationRequestModel>();
             try
             {
-                result = (from oqr in _context.OfflineQuotationRequests                       
+                result = await (from oqr in _context.OfflineQuotationRequests                       
                           join ur in _context.UserRegistrations on oqr.UserId equals ur.UserId
                           where oqr.UserId == userId && oqr.IsDeleted == false
                           select new OfflineQuotationRequestModel
@@ -62,23 +78,22 @@ namespace VICAInsurance.Services.Services
                               VehicleNo = oqr.VehicleNo,
                               UserId = oqr.UserId
 
-                          }).OrderByDescending(s => s.OfflineQuotationId).ToList();
+                          }).OrderByDescending(s => s.OfflineQuotationId).ToListAsync();
 
             }
             catch (Exception ex)
             {
 
             }
-            return result;
+            return  result;
         }
 
-        public List<OfflineQuotationRequestDetailsModel> GetOfflineQuotationDetails(int OfflineQuotationId)
+        public async Task<List<OfflineQuotationRequestDetailsModel>> GetOfflineQuotationDetails(int OfflineQuotationId)
         {
             List<OfflineQuotationRequestDetailsModel> result = new List<OfflineQuotationRequestDetailsModel>();
             try
             {
-                result = (from oqrd in _context.OfflineQuotationRequestDetails
-                         
+                result = await (from oqrd in _context.OfflineQuotationRequestDetails                         
                           where oqrd.OfflineQuotationId == OfflineQuotationId && oqrd.IsDeleted == false
                           select new OfflineQuotationRequestDetailsModel
                           {
@@ -88,9 +103,9 @@ namespace VICAInsurance.Services.Services
                               PremiumAmount = oqrd.PremiumAmount,
                               QuotationUrl = oqrd.QuotationUrl,
                               Status = oqrd.Status,
-                              
+                              InsuranceCompanyName =oqrd.InsuranceCompanyName                             
 
-                          }).OrderByDescending(s => s.OfflineQuotationId).ToList();
+                          }).OrderByDescending(s => s.OfflineQuotationId).ToListAsync();
 
             }
             catch (Exception ex)

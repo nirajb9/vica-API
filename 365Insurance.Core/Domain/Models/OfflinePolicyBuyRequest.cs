@@ -5,9 +5,13 @@ namespace VICAInsurance.Core.Domain.Models;
 
 public partial class OfflinePolicyBuyRequest
 {
-    public int OfflinePolicyRequestId { get; set; }
+    public int OfflinePolicyBuyRequestId { get; set; }
 
     public int? OfflineQuotationId { get; set; }
+
+    public int? UserId { get; set; }
+
+    public int? AgentCompanyId { get; set; }
 
     public string? RcFUrlm { get; set; }
 

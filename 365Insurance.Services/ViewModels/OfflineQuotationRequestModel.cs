@@ -33,4 +33,20 @@ namespace VICAInsurance.Services.ViewModels
         public string? VehicleNo { get; set; }
         public string? UserName { get; set; }
     }
-}
+
+    public class OfflineQuotationRequestDetailsModel
+    {
+        public int OfflineQuotationDetailsId { get; set; }
+
+        public int? OfflineQuotationId { get; set; }
+
+        public decimal? PremiumAmount { get; set; }
+
+        public decimal? PayoutAmount { get; set; }
+
+        public string? QuotationUrl { get; set; }
+
+        public string? Status { get; set; }
+        public string? InsuranceCompanyName { get; set; }
+    }
+ }

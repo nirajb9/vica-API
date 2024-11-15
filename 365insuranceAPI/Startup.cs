@@ -50,6 +50,8 @@ namespace VICAInsuranceAPI
             services.AddScoped<ITpRatesService, TpRatesService>();
             services.AddScoped<ICustomerLeadsService, CustomerLeadsService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IOfflineQuotationService, OfflineQuotationService>();
+            services.AddScoped<IPolicyCashbackService, PolicyCashbackService>();
             services.AddControllers();
         }
     }

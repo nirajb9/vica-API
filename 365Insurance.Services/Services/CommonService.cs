@@ -56,7 +56,7 @@ namespace VICAInsurance.Services.Services
         }
         public async Task<List<PolicyCashback>> GetPolicyCashback(SearchParam searchParam)
         {
-            return await _context.PolicyCashbacks.Where(s => s.UserId == searchParam.UserId && s.AgentCompanyId == searchParam.AgentCompanyId).OrderByDescending(s => s.CashbackAmountId).ToListAsync();
+            return await _context.PolicyCashbacks.Where(s => s.UserId == searchParam.UserId && s.AgentCompanyId == searchParam.AgentCompanyId).OrderByDescending(s => s.PolicyCashbackId).ToListAsync();
         }
         public async Task<CompanySlider> GetCompanySliders(SearchParam searchParam)
         {
