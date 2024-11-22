@@ -62,6 +62,12 @@ namespace VICAInsuranceAPI.Controllers
             var data = await _offlineQuotationService.GetOfflineQuotation(userid);
             return  data;
         }
+        [HttpGet("GetOfflineQuotation")]
+        public async Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation()
+        {
+            var data = await _offlineQuotationService.GetOfflineQuotation();
+            return data;
+        }
 
         [HttpGet("GetOfflineQuotationDetails/{userid}/{id}")]
         public async Task<List<OfflineQuotationRequestDetailsModel>> GetOfflineQuotationDetails(int userid, int id)

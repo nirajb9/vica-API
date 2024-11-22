@@ -72,7 +72,7 @@ namespace VICAInsurance.Services.Services
             {
                 result = await (from pc in _context.PolicyCashbacks
                                 join ur in _context.UserRegistrations on pc.UserId equals ur.UserId
-                                where pc.UserId == userId && pc.IsDeleted == false && pc.PolicyCashbackId == id
+                                where pc.UserId == userId && pc.IsDeleted == false && pc.PolicyCashbackRequestId == id
                                 select new PolicyCashbackModel
                                 {
                                     AgentCompanyId = pc.AgentCompanyId,

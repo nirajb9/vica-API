@@ -88,6 +88,40 @@ namespace VICAInsurance.Services.Services
             return  result;
         }
 
+        public async Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation()
+        {
+            List<OfflineQuotationRequestModel> result = new List<OfflineQuotationRequestModel>();
+            try
+            {
+                result = await (from oqr in _context.OfflineQuotationRequests
+                                join ur in _context.UserRegistrations on oqr.UserId equals ur.UserId
+                                where oqr.IsDeleted == false
+                                select new OfflineQuotationRequestModel
+                                {
+                                    AgentCompanyId = oqr.AgentCompanyId,
+                                    OfflineQuotationId = oqr.OfflineQuotationId,
+                                    Dacover = oqr.Dacover,
+                                    Idv = oqr.Idv,
+                                    Insurancecompanies = oqr.Insurancecompanies,
+                                    Pacover = oqr.Pacover,
+                                    Passangercover = oqr.Passangercover,
+                                    RcBUrlm = oqr.RcBUrlm,
+                                    RcFUrlm = oqr.RcFUrlm,
+                                    Status = oqr.Status,
+                                    UserName = ur.Username,
+                                    VehicleNo = oqr.VehicleNo,
+                                    UserId = oqr.UserId
+
+                                }).OrderByDescending(s => s.OfflineQuotationId).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
         public async Task<List<OfflineQuotationRequestDetailsModel>> GetOfflineQuotationDetails(int OfflineQuotationId)
         {
             List<OfflineQuotationRequestDetailsModel> result = new List<OfflineQuotationRequestDetailsModel>();

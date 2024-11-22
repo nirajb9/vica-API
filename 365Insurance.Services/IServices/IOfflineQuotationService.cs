@@ -13,6 +13,7 @@ namespace VICAInsurance.Services.IServices
         string Save(OfflineQuotationRequest model);
         string SaveOfflinePolicyBuyRequest(OfflinePolicyBuyRequest model);
         Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation(int userId);
+        Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation();
         Task<List<OfflineQuotationRequestDetailsModel>> GetOfflineQuotationDetails(int OfflineQuotationId);
     }
 }
