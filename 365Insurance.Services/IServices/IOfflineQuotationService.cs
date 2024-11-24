@@ -15,5 +15,6 @@ namespace VICAInsurance.Services.IServices
         Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation(int userId);
         Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation();
         Task<List<OfflineQuotationRequestDetailsModel>> GetOfflineQuotationDetails(int OfflineQuotationId);
+        Task<string> SaveOfflineQuoteDetails(OfflineQuotationRequestDetailModel1 model);
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace VICAInsurance.Services.IServices
 {
@@ -25,6 +26,8 @@ namespace VICAInsurance.Services.IServices
         Task<List<ClaimSupportModel>> GetClaimSupport();
         Task<List<MonthlyGridModel>> GetMonthlyGrid();
         Task<List<PolicyCopy>?> GetPolicyCopy(PolicyCopySearch model);
+        Task<string> UploadToFtp(IFormFile model);
+        Task<string> UploadToFtp(byte[] fileBytes, string fileName, int? userid);
 
     }
 }

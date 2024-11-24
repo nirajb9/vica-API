@@ -75,5 +75,21 @@ namespace VICAInsuranceAPI.Controllers
             var data = await _offlineQuotationService.GetOfflineQuotationDetails(id);
             return data;
         }
+        [HttpPost("SaveOfflineQuoteDetails")]
+        public async Task<string> SaveOfflineQuoteDetails([FromBody] OfflineQuotationRequestDetailModel1 model)
+        {
+            var data = "";
+            try
+            {
+                data = await _offlineQuotationService.SaveOfflineQuoteDetails(model);
+
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+            return data;
+
+        }
     }
 }

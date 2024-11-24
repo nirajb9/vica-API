@@ -15,13 +15,14 @@ namespace VICAInsurance.Services.Services
     {
         private readonly _247IDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly ICommonService _commonService;
 
 
-        public OfflineQuotationService(_247IDbContext context, IConfiguration configuration)
+        public OfflineQuotationService(_247IDbContext context, IConfiguration configuration, ICommonService commonService)
         {
             _context = context;
             _configuration = configuration;
-
+            _commonService = commonService;
         }
 
         public string Save(OfflineQuotationRequest model)
@@ -148,5 +149,49 @@ namespace VICAInsurance.Services.Services
             }
             return result;
         }
+
+        public async Task<string> SaveOfflineQuoteDetails(OfflineQuotationRequestDetailModel1 model)
+        {
+            try
+            {
+                string fileUrl = "";
+               
+                if(model.FileData != null)
+                {
+                    byte[] fileBytes = Convert.FromBase64String(model.FileData);
+                    fileUrl = await _commonService.UploadToFtp(fileBytes, model.FileName, model.UserId);
+                }
+              
+                OfflineQuotationRequestDetail offlineQuotationRequestDetail = new OfflineQuotationRequestDetail();
+                offlineQuotationRequestDetail.OfflineQuotationId = model.OfflineQuotationId;
+                offlineQuotationRequestDetail.OfflineQuotationDetailsId = model.OfflineQuotationDetailsId;
+                offlineQuotationRequestDetail.QuotationUrl = fileUrl;
+                offlineQuotationRequestDetail.AgentCompanyId = model.AgentCompanyId;
+                offlineQuotationRequestDetail.CreatedBy = model.CreatedBy;
+                offlineQuotationRequestDetail.CreatedDate = model.CreatedDate;
+                offlineQuotationRequestDetail.ModifiedDate = model.ModifiedDate;
+                offlineQuotationRequestDetail.ModifiedBy = model.ModifiedBy;
+                offlineQuotationRequestDetail.InsuranceCompanyId = model.InsuranceCompanyId;
+                offlineQuotationRequestDetail.InsuranceCompanyName = model.InsuranceCompanyName;
+                offlineQuotationRequestDetail.Status = model.Status;
+                offlineQuotationRequestDetail.PayoutAmount = model.PayoutAmount;
+                offlineQuotationRequestDetail.PremiumAmount = model.PremiumAmount;
+                offlineQuotationRequestDetail.UserId = model.UserId;
+                offlineQuotationRequestDetail.IsDeleted = false;
+                
+
+                _context.OfflineQuotationRequestDetails.Add(offlineQuotationRequestDetail);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return "fail";
+            }
+
+            return "success";
+        }
+
+
+
     }
 }
