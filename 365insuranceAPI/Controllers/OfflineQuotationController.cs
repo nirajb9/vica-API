@@ -56,6 +56,22 @@ namespace VICAInsuranceAPI.Controllers
             return Ok(data);
         }
 
+        [HttpPost("UpdateOfflinePolicyBuyRequest")]
+        public IActionResult UpdateOfflinePolicyBuyRequest([FromBody] OfflinePolicyBuyRequest model)
+        {
+            ResponseResult rr = new ResponseResult();
+            try
+            {
+                rr = _offlineQuotationService.UpdateOfflinePolicyBuyRequest(model);
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(rr);
+            }
+            return Ok(rr);
+        }
+
         [HttpGet("GetOfflineQuotation/{userid}")]
         public async Task<List<OfflineQuotationRequestModel>> GetOfflineQuotation(int userid)
         {
@@ -76,20 +92,41 @@ namespace VICAInsuranceAPI.Controllers
             return data;
         }
         [HttpPost("SaveOfflineQuoteDetails")]
-        public async Task<string> SaveOfflineQuoteDetails([FromBody] OfflineQuotationRequestDetailModel1 model)
+        public async Task<IActionResult> SaveOfflineQuoteDetails([FromBody] OfflineQuotationRequestDetailModel1 model)
         {
-            var data = "";
+            ResponseResult rr = new ResponseResult();
             try
             {
-                data = await _offlineQuotationService.SaveOfflineQuoteDetails(model);
+                rr = await _offlineQuotationService.SaveOfflineQuoteDetails(model);
 
             }
             catch (Exception ex)
             {
-                return "error";
-            }
-            return data;
 
+                return Ok(rr);
+            }
+            return Ok(rr);
+
+        }
+
+        [HttpGet("GetOfflinePolicyBuyRquest/{userid}")]
+        public async Task<List<OfflinePolicyBuyRequest>> GetOfflinePolicyBuyRquest(int userid)
+        {
+            var data = await _offlineQuotationService.GetOfflinePolicyBuyRquest(userid);
+            return data;
+        }
+
+        [HttpGet("GetOfflinePolicyPaymentLink/{userid}")]
+        public async Task<List<OfflineQuotationRequestDetailsModel>> GetOfflinePolicyPaymentLink(int userid)
+        {
+            var data = await _offlineQuotationService.GetOfflinePolicyPaymentLink(userid);
+            return data;
+        }
+        [HttpGet("DeleteOfflineQuoteDetails/{id}")]
+        public ResponseResult DeleteOfflineQuoteDetails(int id)
+        {
+            var data =  _offlineQuotationService.DeleteOfflineQuoteDetails(id);
+            return data;
         }
     }
 }

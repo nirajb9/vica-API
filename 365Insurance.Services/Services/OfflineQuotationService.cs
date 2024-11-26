@@ -128,8 +128,9 @@ namespace VICAInsurance.Services.Services
             List<OfflineQuotationRequestDetailsModel> result = new List<OfflineQuotationRequestDetailsModel>();
             try
             {
-                result = await (from oqrd in _context.OfflineQuotationRequestDetails                         
-                          where oqrd.OfflineQuotationId == OfflineQuotationId && oqrd.IsDeleted == false
+                result = await (from oqrd in _context.OfflineQuotationRequestDetails
+                                join x in _context.OfflineQuotationRequests on oqrd.OfflineQuotationId equals x.OfflineQuotationId
+                                where oqrd.OfflineQuotationId == OfflineQuotationId && oqrd.IsDeleted == false
                           select new OfflineQuotationRequestDetailsModel
                           {
                               OfflineQuotationId = oqrd.OfflineQuotationId,
@@ -138,7 +139,8 @@ namespace VICAInsurance.Services.Services
                               PremiumAmount = oqrd.PremiumAmount,
                               QuotationUrl = oqrd.QuotationUrl,
                               Status = oqrd.Status,
-                              InsuranceCompanyName =oqrd.InsuranceCompanyName                             
+                              InsuranceCompanyName =oqrd.InsuranceCompanyName,
+                              VehicleNo = x.VehicleNo
 
                           }).OrderByDescending(s => s.OfflineQuotationId).ToListAsync();
 
@@ -150,13 +152,14 @@ namespace VICAInsurance.Services.Services
             return result;
         }
 
-        public async Task<string> SaveOfflineQuoteDetails(OfflineQuotationRequestDetailModel1 model)
+        public async Task<ResponseResult> SaveOfflineQuoteDetails(OfflineQuotationRequestDetailModel1 model)
         {
+            ResponseResult rr = new ResponseResult();
             try
             {
                 string fileUrl = "";
-               
-                if(model.FileData != null)
+                
+                if (model.FileData != null)
                 {
                     byte[] fileBytes = Convert.FromBase64String(model.FileData);
                     fileUrl = await _commonService.UploadToFtp(fileBytes, model.FileName, model.UserId);
@@ -182,16 +185,134 @@ namespace VICAInsurance.Services.Services
 
                 _context.OfflineQuotationRequestDetails.Add(offlineQuotationRequestDetail);
                 _context.SaveChanges();
+                rr.Message = "success";
+                rr.StatusCode = 200;
             }
             catch (Exception ex)
             {
-                return "fail";
-            }
+                rr.Message = "error";
+                rr.StatusCode = 400;
 
-            return "success";
+                return rr;
+            }          
+            return rr;
         }
 
+        public async  Task<List<OfflinePolicyBuyRequest>> GetOfflinePolicyBuyRquest(int userid)
+        {
+            List<OfflinePolicyBuyRequest> result = new List<OfflinePolicyBuyRequest>();
+            try
+            {
+                if(userid ==0)
+                {
+                    result = await _context.OfflinePolicyBuyRequests.Where(s => s.IsDeleted == false).OrderByDescending(s=> s.OfflinePolicyBuyRequestId).ToListAsync();
+                }
+                else
+                {
+                    result = await _context.OfflinePolicyBuyRequests.Where(s => s.UserId == userid && s.IsDeleted == false).OrderByDescending(s => s.OfflinePolicyBuyRequestId).ToListAsync();
+                }
+                
+            }
+            catch(Exception ex)
+            {
 
+            }
 
+            return result;
+
+        }
+
+        public ResponseResult UpdateOfflinePolicyBuyRequest(OfflinePolicyBuyRequest model)
+        {
+            ResponseResult rr = new ResponseResult();
+            try
+            {
+                if(model.OfflinePolicyBuyRequestId>0)
+                {
+                    var objUpdate = _context.OfflinePolicyBuyRequests.Where(s => s.OfflinePolicyBuyRequestId == model.OfflinePolicyBuyRequestId).FirstOrDefault();
+                    if(objUpdate != null)
+                    {
+                        objUpdate.PaymentLink = model.PaymentLink;
+                        objUpdate.ModifiedDate = DateTime.Now;
+                        objUpdate.IsDeleted = model.IsDeleted;
+                        objUpdate.Remark = model.Remark;
+                        _context.OfflinePolicyBuyRequests.Update(objUpdate);
+                        _context.SaveChanges();
+                        rr.Message = "success";
+                        rr.StatusCode = 200;
+                    }
+                }              
+            }
+            catch (Exception ex)
+            {
+                rr.Message = "error";
+                rr.StatusCode = 400;
+                return rr;
+            }
+           
+            return rr;
+        }
+
+        public async Task<List<OfflineQuotationRequestDetailsModel>> GetOfflinePolicyPaymentLink(int userid)
+        {
+            List<OfflineQuotationRequestDetailsModel> result = new List<OfflineQuotationRequestDetailsModel>();
+            try
+            {
+                result = await (from oqrd in _context.OfflineQuotationRequestDetails
+                                join opb in _context.OfflinePolicyBuyRequests on oqrd.OfflineQuotationDetailsId equals opb.OfflineQuotationId
+                                where oqrd.UserId == userid && oqrd.IsDeleted == false && opb.IsDeleted == false
+                                select new OfflineQuotationRequestDetailsModel
+                                {
+                                    OfflineQuotationId = oqrd.OfflineQuotationId,
+                                    OfflineQuotationDetailsId = oqrd.OfflineQuotationDetailsId,
+                                    PayoutAmount = oqrd.PayoutAmount,
+                                    PremiumAmount = oqrd.PremiumAmount,
+                                    QuotationUrl = oqrd.QuotationUrl,
+                                    Status = oqrd.Status,
+                                    InsuranceCompanyName = oqrd.InsuranceCompanyName,
+                                    PaymentLink = opb.PaymentLink,
+                                    Remark = opb.Remark,
+                                    PaymentStatus = opb.Status,
+                                    OfflinePolicyBuyRequestId = opb.OfflinePolicyBuyRequestId,
+                                    VehicleNo = opb.VehicleNo
+
+                                }).OrderByDescending(s => s.OfflinePolicyBuyRequestId).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        public ResponseResult DeleteOfflineQuoteDetails(int id)
+        {
+            ResponseResult rr =  new ResponseResult();
+            try
+            {
+                if (id > 0)
+                {
+                    var objUpdate = _context.OfflineQuotationRequestDetails.Where(s => s.OfflineQuotationDetailsId == id).FirstOrDefault();
+                    if (objUpdate != null)
+                    {                     
+                        objUpdate.ModifiedDate = DateTime.Now;
+                        objUpdate.IsDeleted = true;                   
+                        _context.OfflineQuotationRequestDetails.Update(objUpdate);
+                        _context.SaveChanges();
+                        rr.Message = "success";
+                        rr.StatusCode = 200;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                rr.Message = "error";
+                rr.StatusCode = 400;
+                return  rr;
+            }
+           
+            return rr;
+        }
     }
 }

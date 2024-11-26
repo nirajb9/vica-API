@@ -33,6 +33,14 @@ public partial class OfflinePolicyBuyRequest
 
     public string? Status { get; set; }
 
+    public string? VehicleNo { get; set; }
+
+    public string? NomineeName { get; set; }
+
+    public string? NomineeRelationship { get; set; }
+
+    public string? NomineeDob { get; set; }
+
     public bool? IsDeleted { get; set; }
 
     public int? CreatedBy { get; set; }

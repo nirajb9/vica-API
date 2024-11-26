@@ -11,7 +11,7 @@ namespace VICAInsurance.Services.ViewModels
     {
         public int OfflineQuotationId { get; set; }
 
-        public decimal? Idv { get; set; }
+        public string? Idv { get; set; }
 
         public string? Insurancecompanies { get; set; }
 
@@ -49,6 +49,13 @@ namespace VICAInsurance.Services.ViewModels
 
         public string? Status { get; set; }
         public string? InsuranceCompanyName { get; set; }
+        public string? Remark { get; set; }
+
+        public string? PaymentLink { get; set; }
+
+        public string? PaymentStatus { get; set; }
+        public int OfflinePolicyBuyRequestId { get; set; }
+        public string? VehicleNo { get; set; }
     }
     public class OfflineQuotationRequestDetailModel1
     {

@@ -7,7 +7,7 @@ public partial class OfflineQuotationRequest
 {
     public int OfflineQuotationId { get; set; }
 
-    public decimal? Idv { get; set; }
+    public string? Idv { get; set; }
 
     public string? Insurancecompanies { get; set; }
 
@@ -26,6 +26,10 @@ public partial class OfflineQuotationRequest
     public bool? Dacover { get; set; }
 
     public bool? Passangercover { get; set; }
+
+    public bool? Imtcover { get; set; }
+
+    public string? Remark { get; set; }
 
     public string? VehicleNo { get; set; }
 
