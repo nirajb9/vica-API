@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace VICAInsurance.Services.Services
 {
@@ -148,6 +150,76 @@ namespace VICAInsurance.Services.Services
 
             return result;
         }
+
+        public async Task<string> UploadToFtp(byte[] fileBytes, string fileName, int? userid)
+        {
+            var ftpServer = "ftp://vicainsurance.in";
+            var ftpUsername = "webuploads"; //"vicainsu";
+            var ftpPassword = "8u&bvY387"; //"wJ(o6ml5_NV1-)A";
+            long currentDate = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+            fileName = currentDate + "_" + fileName.Replace(" ","");
+
+            var ftpRequest = (FtpWebRequest)WebRequest.Create($"{ftpServer}/{userid}/{fileName}");
+            ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
+            ftpRequest.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+
+            using (var ftpStream = ftpRequest.GetRequestStream())
+            {
+                ftpStream.Write(fileBytes, 0, fileBytes.Length);
+            }
+
+            using (var response = (FtpWebResponse)ftpRequest.GetResponse())
+            {
+                return $"https://assets.vicainsurance.in/uploads/{userid}/{fileName}";
+            }
+        }
+        public async Task<string> UploadToFtp(IFormFile  model)
+        {
+            if (model == null || model.Length == 0)
+            {
+                return "No file uploaded.";
+            }
+
+            var ftpServer = "103.235.104.184";
+            var ftpUsername = "vicainsu";
+            var ftpPassword = "wJ(o6ml5_NV1-)A";
+            var remoteFileName = model.FileName;
+
+            try
+            {
+                // Save the uploaded file temporarily
+                var tempFilePath = Path.Combine(Path.GetTempPath(), remoteFileName);
+                using (var stream = new FileStream(tempFilePath, FileMode.Create))
+                {
+                    await model.CopyToAsync(stream);
+                }
+
+                // Upload the file to the FTP server
+                var ftpRequest = (FtpWebRequest)WebRequest.Create($"{ftpServer}/{remoteFileName}");
+                ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
+                ftpRequest.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+
+                using (var fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
+                using (var ftpStream = await ftpRequest.GetRequestStreamAsync())
+                {
+                    await fileStream.CopyToAsync(ftpStream);
+                }
+
+                var response = (FtpWebResponse)await ftpRequest.GetResponseAsync();
+                var status = response.StatusDescription;
+                response.Close();
+
+                // Optionally, delete the temporary file
+                System.IO.File.Delete(tempFilePath);
+
+                return  "File uploaded successfully";
+            }
+            catch (Exception ex)
+            {
+                return "Error uploading file to FTP";
+            }
+        }
+
 
 
 

@@ -157,11 +157,41 @@ namespace VICAInsurance.Services.Services
                 p.Add("@RTOId", searchParam.RTOId);             
                 p.Add("@CCId", searchParam.CCId);
                 p.Add("@FuelTypeId", searchParam.FuelTypeId);
-                p.Add("@AgeId", searchParam.AgeId);
+                p.Add("@AgeId", 0);
+                if(searchParam.RegistrationYear != null && searchParam.RegistrationYear != "")
+                {
+                    string[] values = searchParam.RegistrationYear.Split(',');
+                    DateTime dt = Convert.ToDateTime("1/" + values[0] + "/" + values[1]);
+                    p.Add("@Age", CalculateAge(dt));
+                }
                 lst = db.Query<VT2>("GetInsuranceInfo", p, commandType: CommandType.StoredProcedure).ToList();
 
             }
             return lst;
+        }
+
+        static int CalculateAge(DateTime vage)
+        {
+            int TotalMonths = 0;
+            DateTime Now = DateTime.Now;
+            int Years = new DateTime(DateTime.Now.Subtract(vage).Ticks).Year - 1;
+            DateTime PastYearDate = vage.AddYears(Years);
+            int Months = 0;
+            for (int i = 1; i <= 12; i++)
+            {
+                if (PastYearDate.AddMonths(i) == Now)
+                {
+                    Months = i;
+                    break;
+                }
+                else if (PastYearDate.AddMonths(i) >= Now)
+                {
+                    Months = i - 1;
+                    break;
+                }
+            }
+            TotalMonths = Years * 12 + Months;        
+            return TotalMonths;
         }
     }
 

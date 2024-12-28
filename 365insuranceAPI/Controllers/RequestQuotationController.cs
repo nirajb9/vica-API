@@ -94,9 +94,9 @@ namespace VICAInsuranceAPI.Controllers
         }
 
         [HttpGet("GetRequestedQuotationById/{userid}/{id}")]
-        public TPRequestQuotationDetailsModel? GetRequestedQuotationById(int userId,int id)
+        public TPRequestQuotationDetailsModel? GetRequestedQuotationById(int userid,int id)
         {
-            var data = _tpRequestQuotationService.GetRequestedQuotationById(id, userId);
+            var data = _tpRequestQuotationService.GetRequestedQuotationById(id, userid);
             return data;
         }
 

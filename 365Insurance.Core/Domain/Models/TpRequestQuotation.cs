@@ -71,6 +71,12 @@ public partial class TpRequestQuotation
 
     public bool? IsDeleted { get; set; }
 
+    public string? NomineeName { get; set; }
+
+    public string? NomineeRelationship { get; set; }
+
+    public string? NomineeDob { get; set; }
+
     public int? CreatedBy { get; set; }
 
     public DateTime? CreatedDate { get; set; }

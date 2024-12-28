@@ -35,6 +35,10 @@ public partial class OfflinePolicyBuyRequest
 
     public string? VehicleNo { get; set; }
 
+    public int? VehicleTypeId { get; set; }
+
+    public string? PreviousPolicy { get; set; }
+
     public string? NomineeName { get; set; }
 
     public string? NomineeRelationship { get; set; }

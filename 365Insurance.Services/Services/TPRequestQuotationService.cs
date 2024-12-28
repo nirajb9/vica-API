@@ -138,8 +138,9 @@ namespace VICAInsurance.Services.Services
             {
                 result = (from trq in _context.TpRequestQuotations
                           join tpr in _context.TpRatesMas on trq.TpId equals tpr.TpRatesId
+                          join tprm in _context.RtoTpratesMappings on tpr.TpRatesId equals tprm.TpRatesId
                           join viv in _context.VehicleInsuranceCompanies on tpr.InsuranceCompanyId equals viv.InsuranceCompanyId
-                          join rm in _context.RtoMas on tpr.RtoId equals rm.RtoId
+                          join rm in _context.RtoMas on tprm.RtoId equals rm.RtoId
                           join sm in _context.StateMas on tpr.StateId equals sm.StateId
                           join vft in _context.VehicleFueltypes on tpr.FueltypeId equals vft.FueltypeId
                           join va in _context.VehicleAges on tpr.AgeId equals va.AgeId
@@ -225,8 +226,9 @@ namespace VICAInsurance.Services.Services
             {
                 result = (from trq in _context.TpRequestQuotations
                           join tpr in _context.TpRatesMas on trq.TpId equals tpr.TpRatesId
+                          join tprm in _context.RtoTpratesMappings on tpr.TpRatesId equals tprm.TpRatesId
                           join viv in _context.VehicleInsuranceCompanies on tpr.InsuranceCompanyId equals viv.InsuranceCompanyId
-                          join rm in _context.RtoMas on tpr.RtoId equals rm.RtoId
+                          join rm in _context.RtoMas on tprm.RtoId equals rm.RtoId
                           join sm in _context.StateMas on tpr.StateId equals sm.StateId
                           join vft in _context.VehicleFueltypes on tpr.FueltypeId equals vft.FueltypeId
                           join va in _context.VehicleAges on tpr.AgeId equals va.AgeId

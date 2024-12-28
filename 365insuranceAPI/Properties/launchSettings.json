@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "_365insuranceAPI": {
+    "VICAInsuranceAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

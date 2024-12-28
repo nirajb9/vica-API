@@ -56,4 +56,10 @@ public partial class TpRatesMa
     public int? ModifiedBy { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
+
+    public int? AgeRangeMin { get; set; }
+
+    public int? AgeRangeMax { get; set; }
+
+    public string? RtoIds { get; set; }
 }

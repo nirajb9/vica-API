@@ -19,7 +19,9 @@ namespace VICAInsurance.Services.ViewModels
         public int AgentCompanyId { get; set; }
         public string? UserName { get; set; }
         public string? VehicleRegistration { get; set; }
-        public int PolicyTypeId { get; set; }
+        public int? PolicyTypeId { get; set; }
+
+        public string? RegistrationYear { get; set; }
     }
 
     public class UploadModel
