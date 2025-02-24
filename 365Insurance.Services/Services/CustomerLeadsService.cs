@@ -34,6 +34,7 @@ namespace VICAInsurance.Services.Services
             return msg;
         }
 
+
         public async Task<List<CustomerLead>?> GetCustomerLead(CustomerLeadSearch model)
         {
             List<CustomerLead>? result = null;

@@ -62,4 +62,6 @@ public partial class TpRatesMa
     public int? AgeRangeMax { get; set; }
 
     public string? RtoIds { get; set; }
+
+    public decimal? ActualPayoutAmount { get; set; }
 }

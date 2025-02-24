@@ -15,12 +15,13 @@ namespace VICAInsurance.Services.Services
     {
         private readonly _247IDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly ICommonService _commonService;
 
-        public PolicyCashbackService(_247IDbContext context, IConfiguration configuration)
+        public PolicyCashbackService(_247IDbContext context, IConfiguration configuration, ICommonService commonService)
         {
             _context = context;
             _configuration = configuration;
-
+            _commonService = commonService;
         }
 
         public string Save(PolicyCashbackRequest model)
@@ -86,6 +87,99 @@ namespace VICAInsurance.Services.Services
                                     Status = pc.Status,
                                     IsPaid = pc.IsPaid
                                 }).FirstOrDefaultAsync();  
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        public async Task<List<PolicyCashbackRequestModel>> GetPolicyCashbackRequest()
+        {
+            List<PolicyCashbackRequestModel> result = new List<PolicyCashbackRequestModel>();
+            try
+            {
+                result = await (from pc in _context.PolicyCashbackRequests
+                                join ur in _context.UserRegistrations on pc.UserId equals ur.UserId
+                                where pc.IsDeleted == false
+                                select new PolicyCashbackRequestModel
+                                {
+                                    AgentCompanyId = pc.AgentCompanyId,
+                                    PolicyCashbackRequestId = pc.PolicyCashbackRequestId,
+                                    PolicyUrlM = pc.PolicyUrlM,
+                                    VehicleNo = pc.VehicleNo,
+                                    UserName = ur.Username,
+                                    Status = pc.Status,
+                                    UserId = ur.UserId
+
+                                }).OrderByDescending(s => s.PolicyCashbackRequestId).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+        public async Task<ResponseResult> SaveCashback(PolicyCashbackDomainModel model)
+        {
+            ResponseResult rr = new ResponseResult();
+            try
+            {
+                string Proof1 = ""; string Proof2 = "";
+                if (model.TransactionProof1 != null)
+                {
+                    byte[] fileBytes = Convert.FromBase64String(model.TransactionProof1);
+                    Proof1 = await _commonService.UploadToFtp(fileBytes, model.FileNameProof1, model.UserId);
+                }
+                if (model.TransactionProof2 != null)
+                {
+                    byte[] fileBytes = Convert.FromBase64String(model.TransactionProof2);
+                    Proof2 = await _commonService.UploadToFtp(fileBytes, model.FileNameProof2, model.UserId);
+                }
+                model.TransactionProof1 = Proof1;
+                model.TransactionProof2 = Proof2;
+                _context.PolicyCashbacks.Add(model);
+                _context.SaveChanges();
+                rr.Message = "success";
+                rr.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                rr.Message = "error";
+                rr.StatusCode = 400;
+                return rr;
+            }
+            return rr;
+        }
+
+        public async Task<List<PolicyCashbackRequestModel>> GetPolicyCashbackDetails(int id)
+        {
+            List<PolicyCashbackRequestModel> result = new List<PolicyCashbackRequestModel>();
+            try
+            {
+                result = await (from pc in _context.PolicyCashbackRequests
+                                join pcn in _context.PolicyCashbacks on pc.PolicyCashbackRequestId equals pcn.PolicyCashbackRequestId
+                                join ur in _context.UserRegistrations on pc.UserId equals ur.UserId
+                                where pc.IsDeleted == false && pc.PolicyCashbackRequestId == id
+                                select new PolicyCashbackRequestModel
+                                {
+                                    AgentCompanyId = pc.AgentCompanyId,
+                                    PolicyCashbackRequestId = pc.PolicyCashbackRequestId,
+                                    PolicyUrlM = pc.PolicyUrlM,
+                                    VehicleNo = pc.VehicleNo,
+                                    UserName = ur.Username,
+                                    Status = pcn.Status,
+                                    UserId = ur.UserId,
+                                    CashbackAmount = pcn.CashbackAmount,
+                                    TransactionDetails = pcn.TransactionDetails,
+                                    PremimumAmount = pcn.PremimumAmount,
+                                    TransactionProof1 = pcn.TransactionProof1,
+                                    TransactionProof2 = pcn.TransactionProof2
+
+                                }).OrderByDescending(s => s.PolicyCashbackRequestId).ToListAsync();
 
             }
             catch (Exception ex)

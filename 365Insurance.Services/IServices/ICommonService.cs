@@ -28,6 +28,7 @@ namespace VICAInsurance.Services.IServices
         Task<List<PolicyCopy>?> GetPolicyCopy(PolicyCopySearch model);
         Task<string> UploadToFtp(IFormFile model);
         Task<string> UploadToFtp(byte[] fileBytes, string fileName, int? userid);
+        Task<List<UserListModel>> GetUserList();
 
     }
 }

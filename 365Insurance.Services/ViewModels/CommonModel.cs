@@ -22,4 +22,10 @@ namespace VICAInsurance.Services.ViewModels
     {
         public IFormFile File { get; set; }
     }
+
+    public class UserListModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }

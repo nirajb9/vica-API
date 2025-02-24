@@ -51,5 +51,34 @@ namespace VICAInsuranceAPI.Controllers
             var data = await _policyCashbackService.GetPolicyCashback(userid,id);
             return data;
         }
+
+        [HttpGet("GetPolicyCashbackRequest")]
+        public async Task<List<PolicyCashbackRequestModel>> GetPolicyCashbackRequest()
+        {
+            var data = await _policyCashbackService.GetPolicyCashbackRequest();
+            return data;
+        }
+        [HttpGet("GetPolicyCashbackDetails/{id}")]
+        public async Task<List<PolicyCashbackRequestModel>> GetPolicyCashbackDetails(int id)
+        {
+            var data = await _policyCashbackService.GetPolicyCashbackDetails(id);
+            return data;
+        }
+        [HttpPost("SaveCashback")]
+        public async Task<IActionResult> SaveCashback([FromBody] PolicyCashbackDomainModel model)
+        {
+            ResponseResult rr = new ResponseResult();
+            try
+            {
+                rr = await _policyCashbackService.SaveCashback(model);
+
+            }
+            catch (Exception ex)
+            {
+
+                return Ok(rr);
+            }
+            return Ok(rr);          
+        }
     }
 }

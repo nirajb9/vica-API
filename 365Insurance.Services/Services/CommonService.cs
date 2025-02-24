@@ -83,6 +83,17 @@ namespace VICAInsurance.Services.Services
             return allMastersModel;
         }
 
+        public  async Task<List<UserListModel>> GetUserList()
+        {
+            return await (from cs in _context.UserRegistrations
+                          where cs.IsDeleted == false
+                          select new UserListModel
+                          {
+                              Id = cs.UserId,
+                              Name = cs.Username + " (" + cs.Name + ")"
+                          }).ToListAsync();
+        }
+
         public async Task<List<ClaimSupportModel>> GetClaimSupport()
         {
             List<ClaimSupportModel>? result = null;

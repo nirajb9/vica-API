@@ -105,14 +105,18 @@ namespace VICAInsuranceAPI.Controllers
             try
             {
                 data = await _commonService.GetPolicyCopy(model);
-
             }
             catch (Exception ex)
             {
                 return data;
             }
             return data;
+        }
 
+        [HttpGet("GetUserList")]
+        public async Task<List<UserListModel>> GetUserList()
+        {
+            return await _commonService.GetUserList();
         }
     }
 }

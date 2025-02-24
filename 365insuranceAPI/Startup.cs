@@ -53,6 +53,8 @@ namespace VICAInsuranceAPI
             services.AddScoped<IOfflineQuotationService, OfflineQuotationService>();
             services.AddScoped<IPolicyCashbackService, PolicyCashbackService>();
             services.AddScoped<IEndorsementPolicyService, EndorsementPolicyService>();
+            services.AddScoped<IPolicyCopyService, PolicyCopyService>();
+            services.AddScoped<IEndorsementService, EndorsementService>();
             services.AddControllers();
         }
     }

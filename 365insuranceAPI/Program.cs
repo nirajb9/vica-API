@@ -31,6 +31,7 @@ app.UseCors(x => x.AllowAnyMethod()
                    .AllowCredentials());
 app.UseHttpsRedirection();
 
+
 app.UseAuthentication();
 
 app.UseAuthorization();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VICAInsurance.Core.Domain.Models;
 
 namespace VICAInsurance.Services.ViewModels
 {
@@ -53,5 +54,20 @@ namespace VICAInsurance.Services.ViewModels
 
         public string? Status { get; set; }
         public string? UserName { get; set; }
+        public decimal? PremimumAmount { get; set; }
+
+        public decimal? CashbackAmount { get; set; }
+
+        public string? TransactionDetails { get; set; }
+
+        public string? TransactionProof1 { get; set; }
+
+        public string? TransactionProof2 { get; set; }
+    }
+
+    public class PolicyCashbackDomainModel:PolicyCashback
+    {
+        public string? FileNameProof1 { get; set; }
+        public string? FileNameProof2 { get; set; }
     }
   }

@@ -9,6 +9,8 @@ public partial class PolicyCopy
 
     public int? UserId { get; set; }
 
+    public string? VehicleNo { get; set; }
+
     public int? AgentCompanyId { get; set; }
 
     public int? TpRequestId { get; set; }
